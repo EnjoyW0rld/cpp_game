@@ -34,10 +34,13 @@ int main() {
 
 #pragma region GameScene
 
+	TextObject stateText("state", f, " nnnnn");
+	game.AddGameObject(stateText);
+	stateText.SetPosition({ 200,500 });
 
-	Character character(texture, "character");
+	Character character(texture, "character",stateText);
 	character.SetPosition({ 200,200 });
-	Enemy enemy(textureEnemy, "enemy");
+	Enemy enemy(textureEnemy, "enemy",stateText);
 	enemy.SetScale({.3,.3});
 	enemy.SetPosition({ 500,200 });
 	game.AssignCharacter(character);
@@ -49,15 +52,18 @@ int main() {
 		});
 	game.AddGameObject(back);
 
+
 	Button attackButton("attack", f, "Attack Enemy", { 200,100 }, textColour);
 	attackButton.SetPosition( 500,300 );
 	attackButton.setButtonAction([&enemy,&character] {
-		character.AttackEnemy(enemy);
+		character.Attack(enemy);
+		//character.AttackEnemy(enemy);
 		});
 	game.AddGameObject(attackButton);
 
 
 #pragma region TextObjects
+
 
 
 	TextObject characterHealth("characterHealth", f, "health");

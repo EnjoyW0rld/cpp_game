@@ -1,28 +1,17 @@
 #pragma once
 #include "SpriteObject.hpp"
 #include "Character.hpp"
-class Character;
+#include "Creature.hpp"
+#include "TextObject.hpp"
 
-class Enemy : public SpriteObject {
-private:
-	enum attribute { _intelligence, _strength, _agility };
-	int health, maxHealth, damage, defence;
-	int intelligence, strength, agility;
+class Enemy : public Creature {
 public:
-	Enemy(sf::Texture& tex,std::string identifier);
+	Enemy(sf::Texture& tex,std::string identifier, TextObject& text);
 	~Enemy(void);
 
 
-	void RandomizeEnemy(int maxPoints);
 	// Inherited via GameObject
-	void Update() override;
+	//void SetText(std::string textToShow);
 	void HandleEvent(const sf::Event& ev, const sf::RenderWindow& window) override;
-	void AttackCharacter(Character& character);
-	void DoTurn(Character& character);
-	void Heal();
-	void GetDamage(int damage);
-	int GetAttribute(attribute at) const;
-
-	int GetHealth() const;
-	int GetMaxHealth() const;
+	void DoTurn(Creature& character);
 };
