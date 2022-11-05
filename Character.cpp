@@ -21,6 +21,13 @@ int Character::GetMaxHealth() const
 	return maxHealth;
 }
 
+void Character::AttackEnemy(Enemy& enemy)
+{
+	int turnDamage = rand() % (damage + 1);
+	std::cout << turnDamage << " this turn damage to enemy" << std::endl;
+	enemy.GetDamage(turnDamage);
+}
+
 void Character::RandomizeCharacter()
 {
 	intelligence = 1, strength = 1, agility = 1;

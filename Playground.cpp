@@ -13,11 +13,8 @@
 #include "FightScene.hpp"
 #include "Enemy.hpp"
 
-void Debug() {
-
-}
-
 int main() {
+	srand(time(0));
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "TEst");
 	sf::Event e;
 	sf::Clock clock;
@@ -35,6 +32,9 @@ int main() {
 	sf::Texture textureEnemy;
 	textureEnemy.loadFromFile("denji.jpg");
 
+#pragma region GameScene
+
+
 	Character character(texture, "character");
 	character.SetPosition({ 200,200 });
 	Enemy enemy(textureEnemy, "enemy");
@@ -48,16 +48,41 @@ int main() {
 		sceneManager.SetScene("menu");
 		});
 	game.AddGameObject(back);
+
+	Button attackButton("attack", f, "Attack Enemy", { 200,100 }, textColour);
+	attackButton.SetPosition( 500,300 );
+	attackButton.setButtonAction([&enemy,&character] {
+		character.AttackEnemy(enemy);
+		});
+	game.AddGameObject(attackButton);
+
+
+#pragma region TextObjects
+
+
 	TextObject characterHealth("characterHealth", f, "health");
 	characterHealth.SetActionPerUpdate([&character,&characterHealth] {
 		std::string textToShow =
 			"Health - " + std::to_string(character.GetHealth()) + "/" + std::to_string(character.GetMaxHealth());
-		std::cout << textToShow << std::endl;
 		characterHealth.SetText(textToShow);
 		});
 	characterHealth.SetColour(sf::Color::Blue);
 	characterHealth.SetPosition({ 200,300 });
 	game.AddGameObject(characterHealth);
+
+	TextObject enemyHealth("enemyHealth", f, "health");
+	enemyHealth.SetActionPerUpdate([&enemy , &enemyHealth] {
+		std::string textToShow =
+			"Health - " + std::to_string(enemy.GetHealth()) + "/" + std::to_string(enemy.GetMaxHealth());
+		//std::cout << textToShow << std::endl;
+		enemyHealth.SetText(textToShow);
+		});
+	enemyHealth.SetColour(sf::Color::Blue);
+	enemyHealth.SetPosition({ 500,10 });
+	game.AddGameObject(enemyHealth);
+#pragma endregion
+
+#pragma endregion
 
 #pragma region  Menu
 
@@ -74,7 +99,7 @@ int main() {
 
 	//quit button
 	Button quit("Quit", f, "Quit", sf::Vector2f(200, 100), sf::Color::White);
-	quit.setPosition(1000, 500);
+	quit.SetPosition(1000, 500);
 	quit.setFontColour(textColour);
 	quit.setButtonAction([&window]() {
 		window.close();
@@ -83,13 +108,13 @@ int main() {
 
 	//erase button
 	Button eraseData("Erase", f, "Erase data", sf::Vector2f(200, 100), sf::Color::White);
-	eraseData.setPosition(1000, 300);
+	eraseData.SetPosition(1000, 300);
 	eraseData.setFontColour(textColour);
 	menu.AddGameObject(eraseData);
 
 	//Swithc scene to play button
 	Button play("SwitchScene", f, "switch next", sf::Vector2f(200, 100), sf::Color::White);
-	play.setPosition(sf::Vector2f(1000, 100));
+	play.SetPosition(sf::Vector2f(1000, 100));
 	play.setFontColour(textColour);
 	play.setButtonAction([&sceneManager]()
 		{
@@ -105,9 +130,6 @@ int main() {
 
 	elapsed = clock.getElapsedTime();
 
-
-	//delete when doing actual thng
-	Debug();
 
 	while (window.isOpen()) {
 		while (window.pollEvent(e)) {

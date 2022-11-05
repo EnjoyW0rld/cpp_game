@@ -18,7 +18,7 @@ Button::Button(std::string identifier, sf::Font& font, std::string buttonText, s
 	sf::FloatRect textRect = this->text.getLocalBounds();
 	this->text.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
 
-	this->setPosition(sf::Vector2f(0.0f, 0.0f));
+	this->SetPosition(sf::Vector2f(0.0f, 0.0f));
 }
 
 Button::~Button() { }
@@ -48,22 +48,6 @@ void Button::onClick()
 	action();
 }
 
-//
-//void Button::handleEvent(const sf::Event& event, sf::RenderWindow& window) {
-//    if(event.type == sf::Event::MouseButtonPressed  && 
-//        event.mouseButton.button == sf::Mouse::Button::Left) {
-//
-//        sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
-//        sf::Vector2f size = shape.getSize();
-//        sf::Vector2f position = shape.getPosition();
-//
-//        if(mousePosition.x >= position.x && mousePosition.x <= position.x + size.x && 
-//            mousePosition.y >= position.y && mousePosition.y <= position.y + size.y) {
-//                this->onClick();
-//        }
-//    }
-//}
-
 void Button::Update() { }
 
 void Button::Render(sf::RenderWindow& window) {
@@ -80,16 +64,16 @@ void Button::setCharacterSize(const int size) {
 	this->text.setCharacterSize(size);
 }
 
-void Button::setPosition(const sf::Vector2f position) {
+void Button::SetPosition(const sf::Vector2f position) {
 	this->shape.setPosition(position);
 	sf::Vector2f size = this->shape.getSize();
 	sf::Vector2f centerButton(position.x + (size.x / 2.0f), position.y + (size.y / 2.0f));
 	this->text.setPosition(centerButton);
 }
 
-void Button::setPosition(const int x, const int y)
+void Button::SetPosition(const int x, const int y)
 {
-	setPosition(sf::Vector2f(x, y));
+	SetPosition(sf::Vector2f(x, y));
 }
 
 void Button::setButtonAction(std::function<void()> action) {

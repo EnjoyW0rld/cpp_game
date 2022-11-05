@@ -1,10 +1,11 @@
 #pragma once
 #include "SpriteObject.hpp"
 #include "Character.hpp"
-//class Character;
+class Character;
 
 class Enemy : public SpriteObject {
 private:
+	enum attribute { _intelligence, _strength, _agility };
 	int health, maxHealth, damage, defence;
 	int intelligence, strength, agility;
 public:
@@ -19,4 +20,9 @@ public:
 	void AttackCharacter(Character& character);
 	void DoTurn(Character& character);
 	void Heal();
+	void GetDamage(int damage);
+	int GetAttribute(attribute at) const;
+
+	int GetHealth() const;
+	int GetMaxHealth() const;
 };

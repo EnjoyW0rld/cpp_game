@@ -1,5 +1,8 @@
 #pragma once
 #include "SpriteObject.hpp"
+#include "Enemy.hpp"
+
+class Enemy;
 
 class Character : public SpriteObject {
 private:
@@ -15,6 +18,8 @@ public:
 	void Render(sf::RenderWindow& window) override;
 	void HandleEvent(const sf::Event& ev, const sf::RenderWindow& window) override;
 	void GetDamage(int damage);
+
+	void AttackEnemy(Enemy& enemy);
 
 	int GetHealth() const;
 	int GetMaxHealth() const;
