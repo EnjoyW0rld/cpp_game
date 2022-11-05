@@ -35,7 +35,7 @@ void Creature::Heal() {
 	health += healAmount;
 	health = health > maxHealth ? maxHealth : health;
 	std::string textToShow = GetName() + " healed " + std::to_string(healAmount) + " HP!";
-
+	text.SetText(textToShow);
 }
 void Creature::ApplyDamage(int damage)
 {

@@ -13,7 +13,7 @@ public:
 	~Scene(void);
 
 	void AddGameObject(GameObject& gameObject);
-	void HandleEvent(const sf::Event& ev,const sf::RenderWindow& window);
+	virtual void HandleEvent(const sf::Event& ev,const sf::RenderWindow& window);
 	virtual void Update();
 	virtual void Render(sf::RenderWindow& window);
 	GameObject& GetObject(const std::string objName);

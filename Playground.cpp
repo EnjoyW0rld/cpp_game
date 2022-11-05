@@ -19,6 +19,7 @@ int main() {
 	sf::Event e;
 	sf::Clock clock;
 	sf::Time elapsed;
+
 	sf::Color textColour = sf::Color::Red;
 
 	Scene menu("menu");
@@ -28,7 +29,7 @@ int main() {
 	sf::Font f;
 	f.loadFromFile("Lato-Regular.ttf");
 	sf::Texture texture;
-	texture.loadFromFile("frog.png");
+	texture.loadFromFile("heart_broken.png");
 	sf::Texture textureEnemy;
 	textureEnemy.loadFromFile("denji.jpg");
 
@@ -39,10 +40,12 @@ int main() {
 	stateText.SetPosition({ 200,500 });
 
 	Character character(texture, "character",stateText);
-	character.SetPosition({ 200,200 });
+	character.SetName("You");
+	character.SetPosition({ 260,250 });
 	Enemy enemy(textureEnemy, "enemy",stateText);
+	enemy.SetName("enemy");
 	enemy.SetScale({.3,.3});
-	enemy.SetPosition({ 500,200 });
+	enemy.SetPosition({ 1010,250 });
 	game.AssignCharacter(character);
 	game.AssignEnemy(enemy);
 
@@ -53,11 +56,19 @@ int main() {
 	game.AddGameObject(back);
 
 
-	Button attackButton("attack", f, "Attack Enemy", { 200,100 }, textColour);
-	attackButton.SetPosition( 500,300 );
-	attackButton.setButtonAction([&enemy,&character] {
+	Button healButton("Heal", f, "Heal", { 150,50 }, textColour);
+	healButton.SetPosition(200, 500);
+	healButton.setButtonAction([&character, &game]{
+		character.Heal();
+		game.ChangeTurn(false);
+		});
+	game.AddGameObject(healButton);
+
+	Button attackButton("attack", f, "Attack Enemy", { 150,50 }, textColour);
+	attackButton.SetPosition( 200,430 );
+	attackButton.setButtonAction([&enemy,&character,&game] {
 		character.Attack(enemy);
-		//character.AttackEnemy(enemy);
+		game.ChangeTurn(false);
 		});
 	game.AddGameObject(attackButton);
 
@@ -80,7 +91,6 @@ int main() {
 	enemyHealth.SetActionPerUpdate([&enemy , &enemyHealth] {
 		std::string textToShow =
 			"Health - " + std::to_string(enemy.GetHealth()) + "/" + std::to_string(enemy.GetMaxHealth());
-		//std::cout << textToShow << std::endl;
 		enemyHealth.SetText(textToShow);
 		});
 	enemyHealth.SetColour(sf::Color::Blue);
@@ -144,6 +154,10 @@ int main() {
 			}
 			else {
 				sceneManager.HandleEvent(e, window);
+			}
+			if (e.type == sf::Event::MouseButtonPressed) {
+				std::cout << "x: " << sf::Mouse::getPosition(window).x << std::endl;
+				std::cout << "y: " << sf::Mouse::getPosition(window).y << std::endl;
 			}
 		}
 		window.clear();

@@ -14,6 +14,8 @@ public:
 	void AssignEnemy(Enemy& enemy);
 	void AssignCharacter(Character& character);
 
+	void HandleEvent(const sf::Event& ev,const sf::RenderWindow& window) override;
 	void Update() override;
 	void Render(sf::RenderWindow& window) override;
+	void ChangeTurn(bool isPlayerTurn);
 };
