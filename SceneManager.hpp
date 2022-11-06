@@ -9,8 +9,8 @@
 class SceneManager {
 private:
 	Scene* currentScene;
-public:
 	std::vector<Scene*> scenes;
+public:
 	SceneManager(Scene& firstScene);
 	~SceneManager(void);
 

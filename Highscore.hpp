@@ -15,9 +15,14 @@ private:
 	std::vector<std::pair<std::string, int>> scores;
 	std::vector<sf::Text> scoreText;
 	sf::Font& font;
+	int spaceBetween;
+
+private:
 	static bool sortAlgorithm(const std::pair<std::string, int>& a, const std::pair<std::string, int>& b);
+	void UpdateScoreText();
+
 public:
-	Highscore(std::string name,std::string identifier,sf::Font& font);
+	Highscore(std::string name,std::string identifier,sf::Font& font,int spaceBetween);
 	~Highscore(void);
 	int GetScoresLength() const;
 	void SortScore();

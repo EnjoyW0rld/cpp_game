@@ -3,7 +3,6 @@
 #include<SFML/Graphics.hpp>
 #include<SFML/Window.hpp>
 #include<SFML/System.hpp>
-//#include"Scene.hpp"
 #include "SpriteObject.hpp"
 #include "button.hpp"
 #include "SceneManager.hpp"
@@ -21,13 +20,16 @@ int main() {
 	sf::Time elapsed;
 
 	sf::Color textColour = sf::Color::Red;
-
-	Scene menu("menu");
-	FightScene game("game");
-	SceneManager sceneManager(menu);
-
 	sf::Font f;
 	f.loadFromFile("Lato-Regular.ttf");
+
+	Highscore highScore("test.txt", "HighScore", f,200);
+
+
+	Scene menu("menu");
+	FightScene game("game",elapsed,highScore);
+	SceneManager sceneManager(menu);
+
 	sf::Texture texture;
 	texture.loadFromFile("heart_broken.png");
 	sf::Texture textureEnemy;
@@ -37,7 +39,7 @@ int main() {
 
 	TextObject stateText("state", f, " nnnnn");
 	game.AddGameObject(stateText);
-	stateText.SetPosition({ 200,500 });
+	stateText.SetPosition({ 200,600 });
 
 	Character character(texture, "character",stateText);
 	character.SetName("You");
@@ -96,6 +98,55 @@ int main() {
 	enemyHealth.SetColour(sf::Color::Blue);
 	enemyHealth.SetPosition({ 500,10 });
 	game.AddGameObject(enemyHealth);
+
+	TextObject c_att_s("characterStrength", f, "str");
+	c_att_s.SetActionPerUpdate([&character,&c_att_s] {
+		std::string textToShow = "Strength - " + std::to_string(character.GetAttribute(Creature::_strength));
+		c_att_s.SetText(textToShow);
+		});
+	c_att_s.SetPosition({ 100,100 });
+	game.AddGameObject(c_att_s);
+
+	TextObject c_att_i("characterIntelligence", f, "int");
+	c_att_i.SetActionPerUpdate([&character, &c_att_i] {
+		std::string textToShow = "Intelligence - " + std::to_string(character.GetAttribute(Creature::_intelligence));
+		c_att_i.SetText(textToShow);
+		});
+	c_att_i.SetPosition({ 100,150 });
+	game.AddGameObject(c_att_i);
+
+	TextObject c_att_a("characterAgility", f, "agi");
+	c_att_a.SetActionPerUpdate([&character, &c_att_a] {
+		std::string textToShow = "Agility - " + std::to_string(character.GetAttribute(Creature::_agility));
+		c_att_a.SetText(textToShow);
+		});
+	c_att_a.SetPosition({ 100,200 });
+	game.AddGameObject(c_att_a);
+
+	TextObject e_att_s("enemyStrength", f, "str");
+	e_att_s.SetActionPerUpdate([&enemy, &e_att_s] {
+		std::string textToShow = "Strength - " + std::to_string(enemy.GetAttribute(Creature::_strength));
+		e_att_s.SetText(textToShow);
+		});
+	e_att_s.SetPosition({ 1000,100 });
+	game.AddGameObject(e_att_s);
+
+	TextObject e_att_i("enemyIntelligence", f, "int");
+	e_att_i.SetActionPerUpdate([&enemy, &e_att_i] {
+		std::string textToShow = "Intelligence - " + std::to_string(enemy.GetAttribute(Creature::_intelligence));
+		e_att_i.SetText(textToShow);
+		});
+	e_att_i.SetPosition({ 1000,150 });
+	game.AddGameObject(e_att_i);
+
+
+	TextObject e_att_a("enemyaAgility", f, "agi");
+	e_att_a.SetActionPerUpdate([&enemy, &e_att_a] {
+		std::string textToShow = "Agility - " + std::to_string(enemy.GetAttribute(Creature::_agility));
+		e_att_a.SetText(textToShow);
+		});
+	e_att_a.SetPosition({ 1000,200 });
+	game.AddGameObject(e_att_a);
 #pragma endregion
 
 #pragma endregion
@@ -103,7 +154,6 @@ int main() {
 #pragma region  Menu
 
 
-	Highscore highScore("test.txt", "HighScore", f);
 	highScore.transform.setPosition({ 100,200 });
 	highScore.SetSpaceBetween(50);
 	menu.AddGameObject(highScore);

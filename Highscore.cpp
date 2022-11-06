@@ -1,9 +1,10 @@
 #include "Highscore.hpp"
 
 
-Highscore::Highscore(std::string fileName, std::string identifier, sf::Font& font) : GameObject(identifier),
+Highscore::Highscore(std::string fileName, std::string identifier, sf::Font& font,int spaceBetween) : GameObject(identifier),
 fileName(fileName), font(font) {
 
+	this->spaceBetween = spaceBetween;
 	std::ifstream myFileRead(fileName);
 	std::string line;
 	while (std::getline(myFileRead, line)) {
@@ -13,18 +14,22 @@ fileName(fileName), font(font) {
 		scores.push_back(std::pair<std::string, int>(name, num));
 	}
 	myFileRead.close();
+	UpdateScoreText();
+}
 
-	for (int i = 0; i < scores.size(); i++)
+void Highscore::UpdateScoreText()
+{
+	if (scoreText.size() > 0) scoreText.erase(scoreText.begin(),scoreText.end());
+		for (int i = 0; i < scores.size(); i++)
 	{
 		std::string textToShow = scores[i].first + ":" + std::to_string(scores[i].second);
 		sf::Text text(textToShow, font);
 		text.setFillColor(sf::Color::White);
-		//text.setPosition(sf::Vector2f(100, 100 + (float)(100 * i)));
 		scoreText.push_back(text);
 
 	}
+		SetSpaceBetween(spaceBetween);
 }
-
 Highscore::~Highscore(void) {}
 
 int Highscore::GetScoresLength() const
@@ -55,16 +60,18 @@ void Highscore::WriteHighScore()
 		myFileRead << scores[i].first << ":" << scores[i].second << std::endl;
 	}
 	myFileRead.close();
+	SetSpaceBetween(spaceBetween);
 }
 void Highscore::AddScore(const std::pair<std::string, int> score)
 {
 	scores.push_back(score);
 	SortScore();
+	UpdateScoreText();
 }
 void Highscore::SetSpaceBetween(const int value)
 {
 	sf::Vector2f pos = transform.getPosition();
-	
+	spaceBetween = value;
 	for (int i = 0; i < scoreText.size(); i++)
 	{
 		scoreText[i].setPosition({ pos.x,pos.y + (value * i) });

@@ -31,7 +31,7 @@ int Creature::GetDamage() const
 }
 
 void Creature::Heal() {
-	int healAmount = rand() % intelligence;
+	int healAmount = rand() % (intelligence + 1);
 	health += healAmount;
 	health = health > maxHealth ? maxHealth : health;
 	std::string textToShow = GetName() + " healed " + std::to_string(healAmount) + " HP!";
@@ -59,6 +59,10 @@ void Creature::Attack(Creature& creature, int& damage)
 void Creature::SetName(std::string name)
 {
 	this->name = name;
+}
+void Creature::ChangeText(std::string textToShow)
+{
+	text.SetText(textToShow);
 }
 
 std::string Creature::GetName() const{

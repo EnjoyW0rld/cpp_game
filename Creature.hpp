@@ -5,11 +5,11 @@
 class Creature : public SpriteObject{
 private:
 	TextObject& text;
-	enum attribute { _intelligence, _strength, _agility };
 	int health, maxHealth, damage, defence;
 	int intelligence, strength, agility;
 	std::string name;
 public:
+	static enum attribute { _intelligence, _strength, _agility };
 	Creature(sf::Texture& tex, std::string identifier,TextObject& text);
 	~Creature(void);
 
@@ -27,6 +27,7 @@ public:
 	std::string GetName() const;
 	int GetAttribute(attribute at) const;
 
+	void ChangeText(std::string textToShow);
 	void SetName(std::string name);
 	void Randomize(int points);
 };

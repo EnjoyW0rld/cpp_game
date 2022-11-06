@@ -1,4 +1,5 @@
 #include "Scene.hpp"
+//#include "SceneManager.hpp"
 
 Scene::Scene(std::string identifier) {
 	this->name = identifier;
@@ -40,7 +41,15 @@ GameObject& Scene::GetObject(const std::string objName)
 		}
 	}
 }
+void Scene::SetParent(SceneManager& manager)
+{
+	this->sceneManager = &manager;
+}
 
+SceneManager& Scene::GetSceneManager() const
+{
+	return (*sceneManager);
+}
 std::string Scene::GetName() const
 {
 	return name;

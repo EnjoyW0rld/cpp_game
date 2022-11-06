@@ -16,9 +16,10 @@ void Enemy::DoTurn(Creature& character)
 		Attack(character);
 		break;
 	case 1:
-		//Heal();
+		Heal();
 		break;
 	case 2:
+		ChangeText(GetName() + " did nothing this turn");
 		break;
 	}
 }

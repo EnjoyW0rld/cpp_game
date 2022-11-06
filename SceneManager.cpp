@@ -7,6 +7,7 @@ SceneManager::~SceneManager(void) {  };
 
 void SceneManager::AddScene(Scene& scene) {
 	scenes.push_back(&scene);
+	scene.SetParent(*(this));
 }
 
 Scene* SceneManager::GetScene(std::string identifier) const
