@@ -23,8 +23,7 @@ int main() {
 	sf::Font f;
 	f.loadFromFile("Lato-Regular.ttf");
 
-	Highscore highScore("test.txt", "HighScore", f,200);
-
+	Highscore highScore("test.cmgt", "HighScore", f,200);
 
 	Scene menu("menu");
 	FightScene game("game",elapsed,highScore);
@@ -46,8 +45,8 @@ int main() {
 	character.SetPosition({ 260,250 });
 	Enemy enemy(textureEnemy, "enemy",stateText);
 	enemy.SetName("enemy");
-	enemy.SetScale({.3,.3});
-	enemy.SetPosition({ 1010,250 });
+	enemy.SetScale({.3f,.3f});
+	enemy.SetPosition({ 1034,404 });
 	game.AssignCharacter(character);
 	game.AssignEnemy(enemy);
 
@@ -96,7 +95,7 @@ int main() {
 		enemyHealth.SetText(textToShow);
 		});
 	enemyHealth.SetColour(sf::Color::Blue);
-	enemyHealth.SetPosition({ 500,10 });
+	enemyHealth.SetPosition({ 1035,282 });
 	game.AddGameObject(enemyHealth);
 
 	TextObject c_att_s("characterStrength", f, "str");

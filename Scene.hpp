@@ -13,7 +13,7 @@ private:
 
 	SceneManager* sceneManager;
 public:
-	Scene(std::string identifier);
+	Scene(const std::string identifier);
 	~Scene(void);
 
 	void AddGameObject(GameObject& gameObject);

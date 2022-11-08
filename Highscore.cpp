@@ -1,11 +1,17 @@
 #include "Highscore.hpp"
 
-
-Highscore::Highscore(std::string fileName, std::string identifier, sf::Font& font,int spaceBetween) : GameObject(identifier),
+Highscore::Highscore(const std::string fileName, std::string identifier, sf::Font& font,int spaceBetween) : GameObject(identifier),
 fileName(fileName), font(font) {
+
+
 
 	this->spaceBetween = spaceBetween;
 	std::ifstream myFileRead(fileName);
+
+	if (myFileRead.fail()) {
+		std::ofstream file(fileName);
+		file.close();
+	}
 	std::string line;
 	while (std::getline(myFileRead, line)) {
 		int tk = line.find(':');
@@ -26,7 +32,6 @@ void Highscore::UpdateScoreText()
 		sf::Text text(textToShow, font);
 		text.setFillColor(sf::Color::White);
 		scoreText.push_back(text);
-
 	}
 		SetSpaceBetween(spaceBetween);
 }
@@ -60,12 +65,13 @@ void Highscore::WriteHighScore()
 		myFileRead << scores[i].first << ":" << scores[i].second << std::endl;
 	}
 	myFileRead.close();
-	SetSpaceBetween(spaceBetween);
+	//SetSpaceBetween(spaceBetween);
 }
 void Highscore::AddScore(const std::pair<std::string, int> score)
 {
 	scores.push_back(score);
 	SortScore();
+	WriteHighScore();
 	UpdateScoreText();
 }
 void Highscore::SetSpaceBetween(const int value)

@@ -2,6 +2,9 @@
 #include "Scene.hpp"
 #include "Enemy.hpp"
 #include "Highscore.hpp"
+#include "SceneManager.hpp"
+#include <stdexcept>
+
 
 class FightScene : public Scene {
 private:
@@ -9,13 +12,13 @@ private:
 	Enemy* enemy;
 	Character* c;
 	sf::Clock clock;
-	sf::Time& deltaTime;
+	const sf::Time& deltaTime;
 	Highscore& highScore;
 	float pauseTime = 2;
 
-	int currentScore;
+	int currentScore = 0;
 public:
-	FightScene(std::string identifier, sf::Time& deltaTime,Highscore& highScore);
+	FightScene(const std::string identifier, const sf::Time& deltaTime,Highscore& highScore);
 	~FightScene();
 
 	void AssignEnemy(Enemy& enemy);
@@ -24,5 +27,5 @@ public:
 	void HandleEvent(const sf::Event& ev, const sf::RenderWindow& window) override;
 	void Update() override;
 	void Render(sf::RenderWindow& window) override;
-	void ChangeTurn(bool isPlayerTurn);
+	void ChangeTurn(const bool isPlayerTurn);
 };

@@ -8,22 +8,25 @@ Enemy::~Enemy() {}
 
 void Enemy::DoTurn(Creature& character)
 {
-	int turnType = rand() % 3;
-	switch (turnType)
-	{
-	case 0:
-		//int turnDamage = rand() % (GetDamage() + 1);
+	
+	//int turnType = rand() % 3;
+	int turnType = (rand() % 100) + 1;
+	if (turnType <= 30) {
 		Attack(character);
-		break;
-	case 1:
+		return;
+	}if (turnType > 30 && turnType <= 60) {
 		Heal();
-		break;
-	case 2:
+		return;
+	}if (turnType > 60) {
 		ChangeText(GetName() + " did nothing this turn");
-		break;
+		return;
 	}
 }
-
+void Enemy::SetOnDieText()
+{
+	std::string textToShow = GetName() + " died!";
+	ChangeText(textToShow);
+}
 
 void Enemy::HandleEvent(const sf::Event& ev, const sf::RenderWindow& window)
 {

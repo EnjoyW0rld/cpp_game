@@ -1,15 +1,15 @@
 #include "GameObject.hpp"
 
-GameObject::GameObject(int x, int y, std::string identifier)
+GameObject::GameObject(const int x,const int y,const std::string identifier) :
+	identifier(identifier)
 {
 	transform.setPosition(x, y);
-	this->identifier = identifier;
 }
 
-GameObject::GameObject(std::string identifier)
+GameObject::GameObject(const std::string identifier) :
+	identifier(identifier)
 {
 	transform.setPosition(0, 0);
-	this->identifier = identifier;
 }
 
 void GameObject::Render(sf::RenderWindow& renderWindow)
@@ -32,7 +32,7 @@ std::string GameObject::GetIdentifier() const
 	return this->identifier;
 }
 
-void GameObject::SetPosition(sf::Vector2f position)
+void GameObject::SetPosition(const sf::Vector2f position)
 {
 	this->transform.setPosition(position);
 }

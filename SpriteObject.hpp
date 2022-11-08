@@ -9,14 +9,14 @@ private:
 	sf::Texture tex;
 
 public:
-	SpriteObject(std::string spriteFile,std::string identifier);
-	SpriteObject(sf::Texture& tex,std::string identifier);
-	SpriteObject(std::string spriteFile,std::string identifier,int x,int y);
+	SpriteObject(const std::string spriteFile,const std::string identifier);
+	SpriteObject(const sf::Texture& tex,const std::string identifier);
+	SpriteObject(const std::string spriteFile,const std::string identifier,const int x,const int y);
 	~SpriteObject(void);
 
 	
-	void SetScale(sf::Vector2f scale);
-	void SetScale(int scale);
+	void SetScale(const sf::Vector2f scale);
+	void SetScale(const int scale);
 	void SetPosition(sf::Vector2f position) override;
 	virtual void Update() override;
 	virtual void Render(sf::RenderWindow& renderWindow) override;

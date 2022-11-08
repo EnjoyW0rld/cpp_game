@@ -1,19 +1,20 @@
 #include "SpriteObject.hpp"
 
 
-SpriteObject::SpriteObject(std::string spriteFile,std::string identifier) :  GameObject(0,0,identifier)
+SpriteObject::SpriteObject(const std::string spriteFile,const std::string identifier) :  GameObject(0,0,identifier)
 {
 	this ->tex.loadFromFile(spriteFile);
 	this ->spr.setTexture(tex);
 }
 
-SpriteObject::SpriteObject(std::string spriteFile,std::string identifier, int x, int y) : GameObject(x,y,identifier)
+SpriteObject::SpriteObject(const std::string spriteFile,const std::string identifier, const int x, const int y) : 
+	GameObject(x,y,identifier)
 {
 	this->tex.loadFromFile(spriteFile);
 	this->spr.setTexture(tex);
 	spr.setPosition(transform.getPosition());
 }
-SpriteObject::SpriteObject(sf::Texture& tex, std::string identifier)
+SpriteObject::SpriteObject(const sf::Texture& tex, const std::string identifier)
 	: GameObject(identifier)
 {
 	this->spr.setTexture(tex);
@@ -31,11 +32,11 @@ void SpriteObject::Update()
 /// Set scale of the sprite (1,1) are default values
 /// </summary>
 /// <param name="scale"></param>
-void SpriteObject::SetScale(sf::Vector2f scale)
+void SpriteObject::SetScale(const sf::Vector2f scale)
 {
 	spr.setScale(scale);
 }
-void SpriteObject::SetScale(int scale)
+void SpriteObject::SetScale(const int scale)
 {
 	spr.setScale(sf::Vector2f(scale,scale));
 }

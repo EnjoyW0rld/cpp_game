@@ -56,11 +56,11 @@ void Creature::Attack(Creature& creature, int& damage)
 	damage = turnDamage;
 	creature.ApplyDamage(turnDamage);
 }
-void Creature::SetName(std::string name)
+void Creature::SetName(const std::string name)
 {
 	this->name = name;
 }
-void Creature::ChangeText(std::string textToShow)
+void Creature::ChangeText(const std::string textToShow)
 {
 	text.SetText(textToShow);
 }
@@ -80,7 +80,7 @@ int Creature::GetAttribute(attribute at) const
 		return agility;
 	}
 }
-void Creature::Randomize(int points)
+void Creature::Randomize(const int points)
 {
 	intelligence = 1, strength = 1, agility = 1;
 	for (int i = 0; i < points; i++)
@@ -101,6 +101,6 @@ void Creature::Randomize(int points)
 	}
 	maxHealth = strength * 1.5;
 	health = maxHealth;
-	damage = agility;
-	defence = strength * .5;
+	damage = agility * 1.5;
+	defence = strength * .2;
 }

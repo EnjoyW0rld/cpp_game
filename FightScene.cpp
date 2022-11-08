@@ -1,9 +1,8 @@
 #include "FightScene.hpp"
-#include "SceneManager.hpp"
 
 
-FightScene::FightScene(std::string identifier, sf::Time& deltaTime,Highscore& highScore) :
-	Scene(identifier), deltaTime(deltaTime),highScore(highScore)
+FightScene::FightScene(const std::string identifier, const sf::Time& deltaTime, Highscore& highScore) :
+	Scene(identifier), deltaTime(deltaTime), highScore(highScore)
 {
 
 }
@@ -31,6 +30,9 @@ void FightScene::Update()
 	if (!isPlayerTurn) {
 
 		if (pauseTime <= 0) {
+			if (enemy == nullptr) {
+				throw std::logic_error("sss");
+			}
 			enemy->DoTurn(*c);
 			std::cout << "enemy did turn" << std::endl;
 			ChangeTurn(true);
@@ -49,16 +51,19 @@ void FightScene::Render(sf::RenderWindow& window)
 	c->Render(window);
 	Scene::Render(window);
 }
-void FightScene::ChangeTurn(bool isPlayerTurn)
+void FightScene::ChangeTurn(const bool isPlayerTurn)
 {
 	if (c->GetHealth() <= 0) {
 		highScore.AddScore({ "myName",currentScore });
 		currentScore = 0;
 		GetSceneManager().SetScene("menu");
+		c->Randomize(5);
+		enemy->Randomize(5);
 	}
 	if (enemy->GetHealth() <= 0) {
 		currentScore++;
-		enemy->Randomize(5);
+		enemy->SetOnDieText();
+		enemy->Randomize(5 + (currentScore * .5));
 	}
 	this->isPlayerTurn = isPlayerTurn;
 }

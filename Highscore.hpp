@@ -11,7 +11,6 @@
 class Highscore : public GameObject {
 private:
 	const std::string fileName;
-	//std::vector<std::string> lines;
 	std::vector<std::pair<std::string, int>> scores;
 	std::vector<sf::Text> scoreText;
 	sf::Font& font;
@@ -22,7 +21,7 @@ private:
 	void UpdateScoreText();
 
 public:
-	Highscore(std::string name,std::string identifier,sf::Font& font,int spaceBetween);
+	Highscore(const std::string fileName,std::string identifier,sf::Font& font,int spaceBetween);
 	~Highscore(void);
 	int GetScoresLength() const;
 	void SortScore();

@@ -1,7 +1,7 @@
 #include "Scene.hpp"
 //#include "SceneManager.hpp"
 
-Scene::Scene(std::string identifier) {
+Scene::Scene(const std::string identifier) {
 	this->name = identifier;
 }
 

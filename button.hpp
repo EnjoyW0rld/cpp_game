@@ -8,8 +8,6 @@
 #include <functional>
 #include "scene.hpp"
 
-// typedef std::function<void()> buttonAction;
-
 class Button : public GameObject {
 
     private:
