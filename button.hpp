@@ -31,5 +31,6 @@ class Button : public GameObject {
         void setCharacterSize(const int size);
         void SetPosition(const sf::Vector2f position) override;
         void SetPosition(const int x,const int y);
+        void SetBackgroundColour(const sf::Color c);
         
 };

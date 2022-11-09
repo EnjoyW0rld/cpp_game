@@ -103,4 +103,5 @@ void Creature::Randomize(const int points)
 	health = maxHealth;
 	damage = agility * 1.5;
 	defence = strength * .2;
+	defence = defence > 4 ? 4 : defence;
 }

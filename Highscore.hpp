@@ -28,7 +28,7 @@ public:
 	void WriteHighScore();
 	void AddScore(const std::pair<std::string, int> score);
 	void SetSpaceBetween(const int value);
-	
+	void EraseScore();
 
 	// Inherited via GameObject
 	void Update() override;

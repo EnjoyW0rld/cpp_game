@@ -26,29 +26,40 @@ int main() {
 	Highscore highScore("test.cmgt", "HighScore", f,200);
 
 	Scene menu("menu");
-	FightScene game("game",elapsed,highScore);
-	SceneManager sceneManager(menu);
+
+	Scene gameOver("gameOver");
+	Button backToMenu("backToMenu", f, "Game over!\n Click to get back to menu", { 1280,720 }, sf::Color::White);
+	backToMenu.SetBackgroundColour(sf::Color::Black);
+	
+	gameOver.AddGameObject(backToMenu);
 
 	sf::Texture texture;
-	texture.loadFromFile("heart_broken.png");
+	texture.loadFromFile("Player.png");
 	sf::Texture textureEnemy;
-	textureEnemy.loadFromFile("denji.jpg");
+	textureEnemy.loadFromFile("Enemy.png");
 
+	TextObject stateText("state", f, " ");
+
+	Character character(texture, "character", stateText);
+	Enemy enemy(textureEnemy, "enemy", stateText);
+
+
+	FightScene game("game",elapsed,highScore,enemy,character);
+	SceneManager sceneManager(menu);
+	sceneManager.AddScene(gameOver);
+	backToMenu.setButtonAction([&sceneManager] {
+		sceneManager.SetScene("menu");
+		});
 #pragma region GameScene
 
-	TextObject stateText("state", f, " nnnnn");
 	game.AddGameObject(stateText);
 	stateText.SetPosition({ 200,600 });
 
-	Character character(texture, "character",stateText);
 	character.SetName("You");
-	character.SetPosition({ 260,250 });
-	Enemy enemy(textureEnemy, "enemy",stateText);
+	character.SetPosition({ 150,250 });
+
 	enemy.SetName("enemy");
-	enemy.SetScale({.3f,.3f});
-	enemy.SetPosition({ 1034,404 });
-	game.AssignCharacter(character);
-	game.AssignEnemy(enemy);
+	enemy.SetPosition({ 1034,304 });
 
 	Button back("back", f, "back", { 100,100 }, textColour);
 	back.setButtonAction([&sceneManager] {
@@ -58,7 +69,7 @@ int main() {
 
 
 	Button healButton("Heal", f, "Heal", { 150,50 }, textColour);
-	healButton.SetPosition(200, 500);
+	healButton.SetPosition(260, 470);
 	healButton.setButtonAction([&character, &game]{
 		character.Heal();
 		game.ChangeTurn(false);
@@ -66,7 +77,7 @@ int main() {
 	game.AddGameObject(healButton);
 
 	Button attackButton("attack", f, "Attack Enemy", { 150,50 }, textColour);
-	attackButton.SetPosition( 200,430 );
+	attackButton.SetPosition( 100,470 );
 	attackButton.setButtonAction([&enemy,&character,&game] {
 		character.Attack(enemy);
 		game.ChangeTurn(false);
@@ -84,8 +95,8 @@ int main() {
 			"Health - " + std::to_string(character.GetHealth()) + "/" + std::to_string(character.GetMaxHealth());
 		characterHealth.SetText(textToShow);
 		});
-	characterHealth.SetColour(sf::Color::Blue);
-	characterHealth.SetPosition({ 200,300 });
+	characterHealth.SetColour(textColour);
+	characterHealth.SetPosition({ 100,250 });
 	game.AddGameObject(characterHealth);
 
 	TextObject enemyHealth("enemyHealth", f, "health");
@@ -94,7 +105,7 @@ int main() {
 			"Health - " + std::to_string(enemy.GetHealth()) + "/" + std::to_string(enemy.GetMaxHealth());
 		enemyHealth.SetText(textToShow);
 		});
-	enemyHealth.SetColour(sf::Color::Blue);
+	enemyHealth.SetColour(textColour);
 	enemyHealth.SetPosition({ 1035,282 });
 	game.AddGameObject(enemyHealth);
 
@@ -175,10 +186,13 @@ int main() {
 	Button eraseData("Erase", f, "Erase data", sf::Vector2f(200, 100), sf::Color::White);
 	eraseData.SetPosition(1000, 300);
 	eraseData.setFontColour(textColour);
+	eraseData.setButtonAction([&highScore] {
+		highScore.EraseScore();
+		});
 	menu.AddGameObject(eraseData);
 
 	//Swithc scene to play button
-	Button play("SwitchScene", f, "switch next", sf::Vector2f(200, 100), sf::Color::White);
+	Button play("SwitchScene", f, "Play", sf::Vector2f(200, 100), sf::Color::White);
 	play.SetPosition(sf::Vector2f(1000, 100));
 	play.setFontColour(textColour);
 	play.setButtonAction([&sceneManager]()

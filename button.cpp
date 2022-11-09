@@ -79,3 +79,7 @@ void Button::SetPosition(const int x, const int y)
 void Button::setButtonAction(std::function<void()> action) {
 	this->action = action;
 }
+void Button::SetBackgroundColour(const sf::Color c)
+{
+	shape.setFillColor(c);
+}

@@ -9,20 +9,17 @@
 class FightScene : public Scene {
 private:
 	bool isPlayerTurn = true;
-	Enemy* enemy;
-	Character* c;
+	Enemy& enemy;
+	Character& c;
 	sf::Clock clock;
 	const sf::Time& deltaTime;
 	Highscore& highScore;
-	float pauseTime = 2;
+	float pauseTime = 1.5;
 
 	int currentScore = 0;
 public:
-	FightScene(const std::string identifier, const sf::Time& deltaTime,Highscore& highScore);
+	FightScene(const std::string identifier, const sf::Time& deltaTime,Highscore& highScore,Enemy& enemy,Character& character);
 	~FightScene();
-
-	void AssignEnemy(Enemy& enemy);
-	void AssignCharacter(Character& character);
 
 	void HandleEvent(const sf::Event& ev, const sf::RenderWindow& window) override;
 	void Update() override;
